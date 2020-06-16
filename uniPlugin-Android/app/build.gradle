@@ -49,7 +49,7 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation fileTree(dir: 'libs', include: ['*.aar'])
-    implementation fileTree(dir: '../../uniapp-demo/nativeplugins/mapleRTC/android', include: ['*.aar'])
+    implementation fileTree(dir: '../../uniapp-demo/nativeplugins/LM-mapleRTC/android', include: ['*.aar'])
 
 
     implementation "com.android.support:support-v4:27.1.0"

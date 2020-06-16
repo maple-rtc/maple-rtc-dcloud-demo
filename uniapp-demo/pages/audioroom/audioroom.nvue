@@ -6,13 +6,13 @@
 		<view class="voiceroom">
 
 		  <view class="voiceroom-cel voiceroom-pusher">
-			<mapleRTCView class="voiceroom-maplertc" ref="maxMapleRTCView" ></mapleRTCView>
+			<LM-mapleRTCView class="voiceroom-maplertc" ref="maxMapleRTCView" ></LM-mapleRTCView>
 			
 			<text class="voiceroom-cel-name">我</text>
 		  </view>
 
 		  <view class="voiceroom-cel voiceroom-player" v-for="(item, index) in players" :key="index">
-			<mapleRTCView class="voiceroom-maplertc" :ref="'remoteUser'">{{item.userId}}</mapleRTCView>
+			<LM-mapleRTCView class="voiceroom-maplertc" :ref="'remoteUser'">{{item.userId}}</LM-mapleRTCView>
 
 			<text class="voiceroom-cel-name">{{item.userId}}</text>
 		  </view>
@@ -23,7 +23,7 @@
 
 <script>
 	import { appId } from '@/common/app.js';
-	const mapleCloud = uni.requireNativePlugin('mapleRTC');
+	const mapleCloud = uni.requireNativePlugin('LM-mapleRTC');
 	const modal = uni.requireNativePlugin('modal');
 	var ownUid = "";
 

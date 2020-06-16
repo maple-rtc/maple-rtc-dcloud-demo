@@ -1,17 +1,17 @@
 <template>
 	<view class="chatBox" >
 		<text class="page-title">多人视频聊天房间号: {{roomId}}</text>
-		<mapleRTCView 
+		<LM-mapleRTCView 
 				ref="maxMapleRTCView" 
 				class="maxMapleRTCView" 
 				:style="{height:windowHeight}">
-		</mapleRTCView>
+		</LM-mapleRTCView>
 
 		<view class="header">
-			<mapleRTCView
+			<LM-mapleRTCView
 			 ref="minMapleRTCView" 
 			 class="minMapleRTCView" 
-			 :style="minStyle"></mapleRTCView>
+			 :style="minStyle"></LM-mapleRTCView>
 		</view>
 
 		<view class="foot-content">

@@ -52,7 +52,7 @@
             }
         },
         "nativePlugins" : {
-            "mapleRTC" : {
+            "LM-mapleRTC" : {
                 "__plugin_info__" : {
                     "name" : "蓝蘑视频云插件",
                     "description" : "蓝蘑视频云插件",

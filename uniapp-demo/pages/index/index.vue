@@ -73,7 +73,7 @@
 
 <script>
 	const modal = uni.requireNativePlugin('modal');
-	const mapleCloud = uni.requireNativePlugin('mapleRTC');
+	const mapleCloud = uni.requireNativePlugin('LM-mapleRTC');
 	import { appId } from '@/common/app.js';
 	
 	import neilModal from '@/components/neil-modal.vue';

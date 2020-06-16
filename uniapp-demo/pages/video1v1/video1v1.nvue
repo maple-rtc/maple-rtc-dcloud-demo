@@ -2,17 +2,17 @@
 	<view class="chatBox" >
 		<text class="page-title">1v1视频聊天房间号: {{roomId}}</text>
 			
-		<mapleRTCView 
+		<LM-mapleRTCView 
 				ref="maxMapleRTCView" 
 				class="maxMapleRTCView" 
 				:style="{height:windowHeight}">
-		</mapleRTCView>
+		</LM-mapleRTCView>
 
 		<view class="header">
-			<mapleRTCView
+			<LM-mapleRTCView
 			 ref="minMapleRTCView" 
 			 class="minMapleRTCView" 
-			 :style="minStyle"></mapleRTCView>
+			 :style="minStyle"></LM-mapleRTCView>
 		</view>
 
 		<view class="foot-content">
@@ -32,7 +32,7 @@
 
 <script>
 	import { appId } from '@/common/app.js';
-	const mapleCloud = uni.requireNativePlugin('mapleRTC');
+	const mapleCloud = uni.requireNativePlugin('LM-mapleRTC');
 	const modal = uni.requireNativePlugin('modal');
 	var ownUid = "";
 	var isPreview = false;

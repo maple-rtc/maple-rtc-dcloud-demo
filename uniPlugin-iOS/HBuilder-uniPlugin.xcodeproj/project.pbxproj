@@ -1282,7 +1282,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)/SDK/libs",
-					"$(PROJECT_DIR)/../uniapp-demo/nativeplugins/mapleRTC/ios",
+					"$(PROJECT_DIR)/../uniapp-demo/nativeplugins/LM-mapleRTC/ios",
 					"$(PROJECT_DIR)/SDK/Libs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1332,7 +1332,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PROJECT_DIR)/SDK/libs",
-					"$(PROJECT_DIR)/../uniapp-demo/nativeplugins/mapleRTC/ios",
+					"$(PROJECT_DIR)/../uniapp-demo/nativeplugins/LM-mapleRTC/ios",
 					"$(PROJECT_DIR)/SDK/Libs",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
