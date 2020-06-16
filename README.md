@@ -28,11 +28,11 @@ export const appId = "Your App ID";
 
 然后在 [maple-rtc SDK](http://sdk.lmaple.com/MapleRtc_DCloud_SDK_Release.zip) 下载 **maple-rtc 实时音视频 SDK for dcloud**，解压后将其中的 **nativeplugins** 文件夹复制到本项目的 **nativeplugins** 下。
 
-- HBuilderX 云打包:
+#### HBuilderX 云打包:
 
 参考HBuilderX 工具进行云打包;
 
-- Xcode 离线打包:
+#### Xcode 离线打包:
 
 下载 dcloud 离线SDK [dcloud SDK](http://sdk.lmaple.com/SDK.zip) 下载 ***SDK***, 解压到uniPlugin-iOS 目录下。
 
@@ -44,7 +44,7 @@ export const appId = "Your App ID";
 
 最后使用 XCode 打开 HBuilder-uniPlugin.xcodeproj，连接 iPhone／iPad 测试设备，设置有效的开发者签名后即可运行。
 
-- Android studio 离线打包:
+#### Android studio 离线打包:
 
 使用 Android Studio 打开uniPlugin-Android 项目，连上android设备，编译并运行。
 
