@@ -1,0 +1,243 @@
+<template>
+	<scroll-view class="page" :style="[windowHeight ? {height: windowHeight + 'px'} : '']" scroll-y="true">
+    
+    <text class="page-title">多人语音房间号: {{roomId}}</text>
+    
+		<view class="voiceroom">
+
+		  <view class="voiceroom-cel voiceroom-pusher">
+			<mapleRTCView class="voiceroom-maplertc" ref="maxMapleRTCView" ></mapleRTCView>
+			
+			<text class="voiceroom-cel-name">我</text>
+		  </view>
+
+		  <view class="voiceroom-cel voiceroom-player" v-for="(item, index) in players" :key="index">
+			<mapleRTCView class="voiceroom-maplertc" :ref="'remoteUser'">{{item.userId}}</mapleRTCView>
+
+			<text class="voiceroom-cel-name">{{item.userId}}</text>
+		  </view>
+    </view>
+
+	</scroll-view>
+</template>
+
+<script>
+	import { appId } from '@/common/app.js';
+	const mapleCloud = uni.requireNativePlugin('mapleRTC');
+	const modal = uni.requireNativePlugin('modal');
+	var ownUid = "";
+
+export default {
+  data() {
+    return {
+      windowHeight: 0,
+      roomId: 123,
+	  players:[],
+	  session:{},
+	  appId:appId
+    }
+  },
+
+  onLoad(params) {
+	  
+	this.windowHeight = uni.getSystemInfoSync().windowHeight;
+	this.roomId = params.channelId
+	
+	this.session = {
+			channelId: params.channelId,
+			userId: params.userId
+		};
+	
+	//初始化
+	mapleCloud.initialize({
+		appId:appId
+	},function(res){
+		uni.showToast({
+			title: res,
+			icon:'none'
+		});
+	});
+	
+	//注册事件回调
+	//加入频道成功监听
+	mapleCloud.addEventListen({name: 'joinChannelSuccessListener'}, function(ret) {
+		ownUid = ret.uid;
+		uni.showToast({
+			title: JSON.stringify(ret),
+			icon:'none'
+		});
+	});
+	
+	//加入频道失败监听
+	mapleCloud.addEventListen({name: 'joinChannelFailedListener'}, function(ret) {
+		uni.showToast({
+			title: JSON.stringify(ret),
+			icon:'none'
+		});
+	});
+	
+	//连接丢失监听
+	mapleCloud.addEventListen({name: 'connectionLostListener'}, function(ret) {
+		modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+	});
+	
+	//离开频道监听
+	mapleCloud.addEventListen({name: 'leaveChannelListener'}, function(ret) {
+		modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+	});
+	
+	//媒体播放停止监听
+	mapleCloud.addEventListen({name: 'mediaStopListener'}, function(ret) {
+		modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+	});
+	
+	//踢下线监听
+	mapleCloud.addEventListen({name: 'forceKickOutChannelListener'}, function(ret) {
+		if(ret.reason == 4200)
+			modal.toast({ message: "强行被其他用户踢出频道！", duration: 1.5});
+		if(ret.reason == 4201)
+			modal.toast({ message: "强行被服务器踢出频道！！", duration: 1.5});
+	});
+
+	//第一个远端视频帧尺寸改变监听
+	mapleCloud.addEventListen({name: 'firstRemoteVideoFrameSizeChangedListener'}, function(ret) {
+		modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+	});
+	//声音音量提示监听
+	mapleCloud.addEventListen({name: 'audioVolumeIndicationListener'}, function(ret) {
+		modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+	});
+	//用户加入通知监听
+	mapleCloud.addEventListen({name: 'userJoinedNoticeListener'}, this.onUserJoinedNoticeListener);
+	//用户离开通知监听
+	mapleCloud.addEventListen({name: 'userOfflineNoticeListener'}, this.onUserOfflineNoticeListener);
+
+	//参数设置
+	//设置频道属性为音频
+	mapleCloud.setChannelProfile({profile:'voiceOnly'});
+	
+	//设置媒体模式
+	mapleCloud.setMediaProfile({audioProfile:'voiceHighQuality', videoProfile:'360P'});
+  },
+  
+  onReady() {
+    this.join();
+  },
+  
+  onResize() {
+    // #ifdef APP-PLUS-NVUE
+    this.resizeWinHeight()
+    // #endif
+  },
+  
+  onNavigationBarButtonTap() {
+  	uni.navigateBack({
+  	    delta: 1,
+  	    animationType: 'pop-out',
+  	    animationDuration: 200
+  	});
+  },
+  
+  onBackPress() {
+	//离开频道
+	mapleCloud.leaveChannel(function(ret) {
+	      modal.toast({ message: ret, duration: 1.5});
+	   });
+  },
+  
+  methods: {
+    join(){
+	   //加入频道
+	   mapleCloud.joinChannel(this.session, function(ret) {
+	      modal.toast({ message: ret, duration: 1.5});
+	   });
+    },
+	
+	//有用户加入通知
+	onUserJoinedNoticeListener(ret) {
+		modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+		for(var i=0; i < ret.uids.length; i++){
+			
+			if(ownUid == ret.uids[i]){
+				continue;
+			}
+			this.addPlayer(ret.uids[i]);
+		}
+	},
+	
+	//有用户离开通知
+	onUserOfflineNoticeListener(ret) {
+		modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+		for(var i=0; i < ret.uids.length; i++){
+			this.removePlayer(ret.uids[i]);
+		}
+	},
+   
+    addPlayer(userId) {
+      this.players.push({
+        userId: userId
+      })
+    },
+    
+    removePlayer(userId) {
+      for (let i = 0; i < this.players.length; i++) {
+        let d = this.players[i]
+        if (d.userId === userId) {
+          this.players.splice(i, 1)
+          break
+        }
+      }
+    },
+    
+    resizeWinHeight() {
+      uni.getSystemInfo({
+        success: (res) => {
+          this.windowHeight = res.windowHeight
+        }
+      });
+    },
+  }
+}
+</script>
+
+<style lang="scss">
+.page {
+  height: 100%;
+  background-color: #271506;
+}
+.page-title {
+  width: 750rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.voiceroom {
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  width: 750rpx;
+}
+$cel-width: 0.5 * 750rpx;
+.voiceroom-cel {
+  width: $cel-width;
+  height: 1.382 * $cel-width + 40rpx;
+  padding: 20rpx;
+}
+.voiceroom-maplertc {
+  width: $cel-width - 40rpx;
+  height: 1.382 * $cel-width - 40rpx;
+  background-color: #444;
+}
+
+.voiceroom-cel-name {
+  width: $cel-width - 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  color: #999;
+  font-size: 24rpx;
+}
+</style>

@@ -1,0 +1,7 @@
+{
+  "nativePlugins": [
+    {
+      "hooksClass": "com.maple.rtc.dcloud.video.MapleRTCAppProxy"
+    }
+  ]
+}
