@@ -58,3 +58,11 @@ export const appId = "Your App ID";
 ## 联系我们
 
 对接qq群  **701150764**
+
+## Demo
+注：android可以测试运行，iOS 打包的可以下载demo代码自行打包产生；
+
+android:
+[Android 实时音视频演示Demo](http://fir.kcrtu.com/mapleHAnd)
+
+
