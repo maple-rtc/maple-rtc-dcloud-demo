@@ -129,6 +129,8 @@ export default {
 		//参数设置
 		//设置频道属性为音频+视频
 		mapleCloud.setChannelProfile({profile:'voiceAndVideo'});
+		//设置音频为混音模式
+		mapleCloud.setAudioConferenceProfile({profile:'mcu'});
 		//设置媒体模式
 		mapleCloud.setMediaProfile({audioProfile:'voiceHighQuality', videoProfile:'360P'});
 	},

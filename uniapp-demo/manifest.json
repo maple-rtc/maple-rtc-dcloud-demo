@@ -42,7 +42,8 @@
             /* ios打包配置 */
             "ios" : {
                 "privacyDescription" : {
-                    "NSCameraUsageDescription" : "321"
+                    "NSCameraUsageDescription" : "视频通话使用",
+                    "NSMicrophoneUsageDescription" : "视频通话使用"
                 },
                 "idfa" : false
             },

@@ -31,7 +31,7 @@
 
 <script>
 	import { appId } from '@/common/app.js';
-	const mapleCloud = uni.requireNativePlugin('mapleRTC');
+	const mapleCloud = uni.requireNativePlugin('LM-mapleRTC');
 	const modal = uni.requireNativePlugin('modal');
 	var ownUid = "";
 	var isPreview = false;
@@ -128,8 +128,10 @@ export default {
 		//参数设置
 		//设置频道属性为音频+视频
 		mapleCloud.setChannelProfile({profile:'voiceAndVideo'});
-		//设置MCU模式
+		//设置视频为混屏模式
 		mapleCloud.setVideoConferenceProfile({profile:'mcu'});
+		//设置音频为混音模式
+		mapleCloud.setAudioConferenceProfile({profile:'mcu'});
 		//设置媒体模式
 		mapleCloud.setMediaProfile({audioProfile:'voiceHighQuality', videoProfile:'360P'});
 	},
