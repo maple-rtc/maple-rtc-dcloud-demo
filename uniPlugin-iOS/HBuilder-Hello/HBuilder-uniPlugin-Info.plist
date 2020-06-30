@@ -72,7 +72,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>20503</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>DCLOUD_AD_ID</key>
 	<string>13453452345</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -443,7 +443,7 @@
 					<key>class</key>
 					<string>mapleRTCModule</string>
 					<key>name</key>
-					<string>mapleRTC</string>
+					<string>LM-mapleRTC</string>
 					<key>type</key>
 					<string>module</string>
 				</dict>
@@ -451,7 +451,7 @@
 					<key>class</key>
 					<string>mapleRTCComponent</string>
 					<key>name</key>
-					<string>mapleRTCView</string>
+					<string>LM-mapleRTCView</string>
 					<key>type</key>
 					<string>component</string>
 				</dict>
