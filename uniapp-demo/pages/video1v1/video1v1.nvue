@@ -126,6 +126,14 @@ export default {
 		//用户离开通知监听
 		mapleCloud.addEventListen({name: 'userOfflineNoticeListener'}, this.onUserOfflineNoticeListener);
 
+		//SDK错误监听
+		mapleCloud.addEventListen({name: 'errorListener'}, function(ret) {
+		if(ret.error == 4007)
+			modal.toast({ message: "设备没有录音或者摄像头权限,在系统设置里打开相关权限！", duration: 1.5});
+		else
+			modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+		});
+		
 		//参数设置
 		//设置频道属性为音频+视频
 		mapleCloud.setChannelProfile({profile:'voiceAndVideo'});

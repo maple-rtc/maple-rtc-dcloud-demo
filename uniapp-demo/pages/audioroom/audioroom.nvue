@@ -98,6 +98,14 @@ export default {
 		if(ret.reason == 4201)
 			modal.toast({ message: "强行被服务器踢出频道！！", duration: 1.5});
 	});
+	
+	//SDK错误监听
+	mapleCloud.addEventListen({name: 'errorListener'}, function(ret) {
+	if(ret.error == 4007)
+		modal.toast({ message: "设备没有麦克风权限,在系统设置里打开相关权限！", duration: 1.5});
+	else
+		modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+	});
 
 	//第一个远端视频帧尺寸改变监听
 	mapleCloud.addEventListen({name: 'firstRemoteVideoFrameSizeChangedListener'}, function(ret) {
