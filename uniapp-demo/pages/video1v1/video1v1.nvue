@@ -166,14 +166,14 @@ export default {
 				icon:'none'
 			});
 			//设置本地视频view
-			this.$refs.maxMapleRTCView.setupLocalVideo({enabled: true}, function(ret) {
+			this.$refs.minMapleRTCView.setupLocalVideo({enabled: true}, function(ret) {
 				uni.showToast({
 					title: JSON.stringify(ret), 
 					icon:'none'
 				});
 			});
 			//开启本地预览模式
-			this.$refs.maxMapleRTCView.startPreview(function(ret) {
+			this.$refs.minMapleRTCView.startPreview(function(ret) {
 				uni.showToast({
 					title: JSON.stringify(ret),
 					icon:'none'
@@ -182,7 +182,7 @@ export default {
 			});
 			
 			//发送本地视频
-			this.$refs.maxMapleRTCView.muteLocalVideoStream({muted: false}, function(ret) {
+			this.$refs.minMapleRTCView.muteLocalVideoStream({muted: false}, function(ret) {
 				uni.showToast({
 					title: JSON.stringify(ret),
 					icon:'none'
@@ -196,29 +196,32 @@ export default {
 				if(ownUid == ret.uids[i]){
 					continue;
 				}
-				//大视频置底
-				this.$refs.maxMapleRTCView.setZOrderOnTop({uid: ownUid, enabled: false},  function(ret) {
-					uni.showToast({
-						title: JSON.stringify(ret),
-						icon:'none'
-					});
-				 });
-				 //小视频置顶
-				this.$refs.minMapleRTCView.setZOrderOnTop({uid: ret.uids[i], enabled: true},  function(ret) {
-					uni.showToast({
-						title: JSON.stringify(ret),
-						icon:'none'
-					});
-				 });
+				
 				//设置远端视频view
-				this.$refs.minMapleRTCView.setupRemoteVideo({enabled: true, userId: ret.uids[i]},  function(ret) {
+				this.$refs.maxMapleRTCView.setupRemoteVideo({enabled: true, userId: ret.uids[i]},  function(ret) {
 					uni.showToast({
 						title: JSON.stringify(ret),
 						icon:'none'
 					});
 				 });
 				//观看远端视频
-				this.$refs.minMapleRTCView.muteRemoteVideoStream({userId:ret.uids[i] , muted: false}, function(ret) {
+				this.$refs.maxMapleRTCView.muteRemoteVideoStream({userId:ret.uids[i] , muted: false}, function(ret) {
+					uni.showToast({
+						title: JSON.stringify(ret),
+						icon:'none'
+					});
+				});	
+				
+				//小视频置顶
+				this.$refs.minMapleRTCView.setZOrderOnTop({uid: ownUid, enabled: true},  function(ret) {
+					uni.showToast({
+						title: JSON.stringify(ret),
+						icon:'none'
+					});
+				 });
+					
+				//大视频置底
+				this.$refs.maxMapleRTCView.setZOrderOnTop({uid: ret.uids[i], enabled: false},  function(ret) {
 					uni.showToast({
 						title: JSON.stringify(ret),
 						icon:'none'
@@ -231,7 +234,7 @@ export default {
 			modal.toast({ message: JSON.stringify(ret), duration: 1.5});
 			for(var i=0; i < ret.uids.length; i++){
 				 //暂停远端视频
-				this.$refs.minMapleRTCView.muteRemoteVideoStream({userId: ret.uids[i] , muted: true}, function(ret) {
+				this.$refs.maxMapleRTCView.muteRemoteVideoStream({userId: ret.uids[i] , muted: true}, function(ret) {
 					uni.showToast({
 						title: JSON.stringify(ret),
 						icon:'none'
@@ -239,7 +242,7 @@ export default {
 				});
 
 				//移除远端视频显示view
-				this.$refs.minMapleRTCView.setupRemoteVideo({enabled: false, userId: ret.uids[i]},  function(ret) {
+				this.$refs.maxMapleRTCView.setupRemoteVideo({enabled: false, userId: ret.uids[i]},  function(ret) {
 					uni.showToast({
 						title: JSON.stringify(ret),
 						icon:'none'
