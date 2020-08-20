@@ -5,7 +5,7 @@
 		</view>
 		
 		<view>
-			<neil-modal :show="show4" @close="closeModal('4')" content="当前appId 为空, 从蓝蘑云网站[http://account.lmaple.com/]注册appID">
+			<neil-modal :show="show6" @close="closeModal('6')" content="当前appId 为空, 从蓝蘑云网站[http://account.lmaple.com/]注册appID">
 			</neil-modal>
 		</view>
 		
@@ -65,6 +65,38 @@
 		    </neil-modal>
 		</view>
 		
+		<view>
+		    <button type="default" @click="bindClick('4')">视频直播推流</button>
+		    <neil-modal :show="show4" @close="closeModal('4')" @confirm="confirmModal('4')" title="请输入房间和用户名">
+		        <view class="input-view">
+		            <view class="input-name">
+		                <view>用户名</view>
+		                <input type="text" placeholder="请输入用户Id" v-model="userId" />
+		            </view>
+		            <view class="input-name">
+		                <view>房间ID</view>
+		                <input type="text" placeholder="请输入房间ID" v-model="roomId" />
+		            </view>
+		        </view>
+		    </neil-modal>
+		</view>
+		
+		<view>
+		    <button type="default" @click="bindClick('5')">视频直播播放</button>
+		    <neil-modal :show="show5" @close="closeModal('5')" @confirm="confirmModal('5')" title="请输入房间和用户名">
+		        <view class="input-view">
+		            <view class="input-name">
+		                <view>用户名</view>
+		                <input type="text" placeholder="请输入用户Id" v-model="userId" />
+		            </view>
+		            <view class="input-name">
+		                <view>房间ID</view>
+		                <input type="text" placeholder="请输入房间ID" v-model="roomId" />
+		            </view>
+		        </view>
+		    </neil-modal>
+		</view>
+		
 		<view class="line-top">
 			<view class="line"></view>
 		</view>
@@ -88,6 +120,8 @@
 				show2: false,
 				show3: false,
 				show4: false,
+				show5: false,
+				show6: false,
 				userId:"",
 				roomId:""
 			};
@@ -99,7 +133,7 @@
 			
 			if(appId == ""){
 				
-				 this[`show4`] = true
+				 this[`show6`] = true
 			return;
 			}
 		},
@@ -142,6 +176,14 @@
 				} else if (type == 3) {
 					uni.navigateTo({
 						url:"../video/video?channelId="+channelId+"&userId="+userId
+					})
+				} else if (type == 4) {
+					uni.navigateTo({
+						url:"../live/live?channelId="+channelId+"&userId="+userId
+					})
+				} else if (type == 5) {
+					uni.navigateTo({
+						url:"../live/liveplay?channelId="+channelId+"&userId="+userId
 					})
 				}
 				

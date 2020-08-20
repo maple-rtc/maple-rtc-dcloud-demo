@@ -6,6 +6,42 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}
+		,{
+		    "path" : "pages/live/live",
+		    "style" : {
+		        "app-plus" : {
+		            "titleNView" : {
+		    			"autoBackButton":false,
+		                "buttons" : [
+		                       {
+		    						 "text": "exit", 
+		    						 "fontSize":"16",
+		    						 "float": "left",
+		    						 "color":"#ff0000"
+		                        }
+		                ]
+		            }
+		        }
+		    }
+		}
+		,{
+		    "path" : "pages/live/liveplay",
+		    "style" : {
+		        "app-plus" : {
+		            "titleNView" : {
+		    			"autoBackButton":false,
+		                "buttons" : [
+		                       {
+		    						 "text": "exit", 
+		    						 "fontSize":"16",
+		    						 "float": "left",
+		    						 "color":"#ff0000"
+		                        }
+		                ]
+		            }
+		        }
+		    }
+		}
         ,{
             "path" : "pages/video1v1/video1v1",
             "style" : {
