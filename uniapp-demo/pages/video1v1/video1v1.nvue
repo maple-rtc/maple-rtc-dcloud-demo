@@ -140,7 +140,7 @@ export default {
 		//设置音频为混音模式
 		mapleCloud.setAudioConferenceProfile({profile:'mcu'});
 		//设置媒体模式
-		mapleCloud.setMediaProfile({audioProfile:'voiceHighQuality', videoProfile:'360P'});
+		mapleCloud.setMediaProfile({audioProfile:'musicHighQuality', videoProfile:'360P'});
 	},
 	onReady() {
 		this.join();
@@ -324,7 +324,7 @@ export default {
 						});
 						
 					} else if (index == 10) {
-						mapleCloud.startPlayMedia({path: "http://share.lmaple.com/test.mp3", type:3, cycle:1}, function(ret) {
+						mapleCloud.startPlayMedia({path: "http://share.lmaple.com/test.mp3", type:3, cycle:1, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 							isPausedMedia = false;
 							isMutedMedia = false;
@@ -332,33 +332,33 @@ export default {
 						
 					} else if (index == 11) {
 						isPausedMedia = !isPausedMedia;
-						mapleCloud.pausePlayMedia({paused: isPausedMedia}, function(ret) {
+						mapleCloud.pausePlayMedia({paused: isPausedMedia, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					} else if (index == 12) {
-						mapleCloud.stopPlayMedia(function(ret) {
+						mapleCloud.stopPlayMedia({index:1},function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 						
 					} else if (index == 13) {
 						isMutedMedia = !isMutedMedia;
-						mapleCloud.mutePlayMedia({muted: isMutedMedia}, function(ret) {
+						mapleCloud.mutePlayMedia({muted: isMutedMedia, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					} else if (index == 14) {
-						mapleCloud.adjustPlayMediaVolume({volume: 50}, function(ret) {
+						mapleCloud.adjustPlayMediaVolume({volume: 30, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					} else if (index == 15) {
-						mapleCloud.setPlayMediaPosition({position: 10000}, function(ret) {
+						mapleCloud.setPlayMediaPosition({position: 10000, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					} else if (index == 16) {
-						mapleCloud.getPlayMediaTotalDuration(function(ret) {
+						mapleCloud.getPlayMediaTotalDuration({index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					} else if (index == 17) {
-						 mapleCloud.getPlayMediaCurrentPosition(function(ret) {
+						 mapleCloud.getPlayMediaCurrentPosition({index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					} 

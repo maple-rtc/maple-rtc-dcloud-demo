@@ -199,7 +199,7 @@ export default {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					} else if (index == 2) {
-						mapleCloud.stopPlayMedia(function(ret) {
+						mapleCloud.stopPlayMedia({}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 						
