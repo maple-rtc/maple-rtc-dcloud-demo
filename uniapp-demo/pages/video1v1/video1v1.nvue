@@ -46,6 +46,7 @@
 	var isRemoteVideo = false;
 	var isBeautify = false;
 	var isFrontOutputMirror = false;
+	var isBackCameraTorchOn = false;
 	var isPausedMedia = true;
 	var isMutedMedia = true;
 
@@ -254,7 +255,7 @@ export default {
 		menuAction(){
 			var me = this;
 			 uni.showActionSheet({
-				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始停止发送本地视频", '切换前后摄像头', '开关显示远端视频','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','播放媒体文件','暂停媒体','停止媒体','静音媒体','调节媒体音量','设置媒体播放位置','获取总时长','获取当前播放位置'],
+				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始停止发送本地视频", '切换前后摄像头', '开关显示远端视频','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开关闪光灯','播放媒体文件','暂停媒体','停止媒体','静音媒体','调节媒体音量','设置媒体播放位置','获取总时长','获取当前播放位置'],
 				success(res) {
 					var index = res.tapIndex;
 					if (index == 0) {
@@ -322,42 +323,45 @@ export default {
 						mapleCloud.enableFrontOutputMirror({enabled: isFrontOutputMirror}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-						
 					} else if (index == 10) {
+						isBackCameraTorchOn = !isBackCameraTorchOn;
+						//开关后置摄像头闪光灯
+						mapleCloud.setCameraTorchOn({enabled: isBackCameraTorchOn}, function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
+					} else if (index == 11) {
 						mapleCloud.startPlayMedia({path: "http://share.lmaple.com/test.mp3", type:3, cycle:1, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 							isPausedMedia = false;
 							isMutedMedia = false;
 						});
-						
-					} else if (index == 11) {
+					} else if (index == 12) {
 						isPausedMedia = !isPausedMedia;
 						mapleCloud.pausePlayMedia({paused: isPausedMedia, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 12) {
+					} else if (index == 13) {
 						mapleCloud.stopPlayMedia({index:1},function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-						
-					} else if (index == 13) {
+					} else if (index == 14) {
 						isMutedMedia = !isMutedMedia;
 						mapleCloud.mutePlayMedia({muted: isMutedMedia, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 14) {
+					} else if (index == 15) {
 						mapleCloud.adjustPlayMediaVolume({volume: 30, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 15) {
+					} else if (index == 16) {
 						mapleCloud.setPlayMediaPosition({position: 10000, index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 16) {
+					} else if (index == 17) {
 						mapleCloud.getPlayMediaTotalDuration({index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 17) {
+					} else if (index == 18) {
 						 mapleCloud.getPlayMediaCurrentPosition({index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
