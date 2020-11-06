@@ -37,6 +37,7 @@
 	var ownUid = "";
 	var isPreview = false;
 	var isMuted = false;
+	var is_open_mic = true;
 	var isSpeakerphone = true;
 	var isMicAndSpeakerphone = true;
 	var switchScreen = true;
@@ -255,7 +256,7 @@ export default {
 		menuAction(){
 			var me = this;
 			 uni.showActionSheet({
-				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始停止发送本地视频", '切换前后摄像头', '开关显示远端视频','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开关闪光灯','播放媒体文件','暂停媒体','停止媒体','静音媒体','调节媒体音量','设置媒体播放位置','获取总时长','获取当前播放位置'],
+				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始停止发送本地视频", '切换前后摄像头', '开关显示远端视频','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开关闪光灯','播放媒体文件','暂停媒体','停止媒体','静音媒体','调节媒体音量','设置媒体播放位置','获取总时长','获取当前播放位置', "开关本地音频流"],
 				success(res) {
 					var index = res.tapIndex;
 					if (index == 0) {
@@ -271,11 +272,18 @@ export default {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					} else if (index == 1) {
-						isMuted = !isMuted;
+						
 						//开关麦克风
-						mapleCloud.muteLocalAudioStream({muted : isMuted},  function(ret) {
-							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
-						});
+						if(is_open_mic){
+							mapleCloud.stopLocalAudio(function(ret) {
+								uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+							});
+						}else{
+							mapleCloud.startLocalAudio(function(ret) {
+								uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+							});
+						}
+						is_open_mic = !is_open_mic;
 					} else if (index == 2) {
 						isMicAndSpeakerphone = !isMicAndSpeakerphone;
 						//切换听筒和扬声器
@@ -365,7 +373,13 @@ export default {
 						 mapleCloud.getPlayMediaCurrentPosition({index:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} 
+					} else if (index == 19) {
+						isMuted = !isMuted;
+						//开关本地音频流
+						mapleCloud.muteLocalAudioStream({muted : isMuted},  function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
+					}
 				}
 			 })
 		},

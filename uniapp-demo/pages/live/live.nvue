@@ -207,10 +207,22 @@ export default {
 		menuAction(){
 			var me = this;
 			 uni.showActionSheet({
-				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始直播推流", '切换前后摄像头', '停止直播推流','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开始拉取媒体流','暂停媒体','停止拉取媒体流','静音媒体','调节媒体音量'],
+				itemList: ["开始直播推流", "停止直播推流", "开关扬声器", "开关麦克风音量",'切换听筒和扬声器',"开关本地预览", '切换前后摄像头', '停止直播推流','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开始拉取媒体流','暂停媒体','停止拉取媒体流','静音媒体','调节媒体音量'],
 				success(res) {
 					var index = res.tapIndex;
 					if (index == 0) {
+						//开始直播推流
+						mapleCloud.startPublish({rtmpUrl: ""}, function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
+						isSendingVideo = !isSendingVideo;
+					} else if (index == 1) {
+						//停止直播推流
+						mapleCloud.stopPulish(function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
+						isSendingVideo = !isSendingVideo;
+					} else if (index == 2) {
 						var value;
 						isSpeakerphone = !isSpeakerphone;
 						if(isSpeakerphone){
@@ -222,19 +234,26 @@ export default {
 						mapleCloud.adjustPlaybackSignalVolume({volume:value}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 1) {
+					} else if (index == 3) {
 						isMuted = !isMuted;
-						//开关麦克风
-						mapleCloud.muteLocalAudioStream({muted : isMuted},  function(ret) {
-							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
-						});
-					} else if (index == 2) {
+						//开关麦克风音量
+						if(isMuted){
+							mapleCloud.adjustRecordingSignalVolume({volume : 0},  function(ret) {
+								uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+							});
+						}else{
+							mapleCloud.adjustRecordingSignalVolume({volume : 100},  function(ret) {
+								uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+							});
+						}
+						
+					} else if (index == 4) {
 						isMicAndSpeakerphone = !isMicAndSpeakerphone;
 						//切换听筒和扬声器
 						mapleCloud.setEnableSpeakerphone({enabled : isMicAndSpeakerphone},  function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 3) {
+					} else if (index == 5) {
 						isPreview = !isPreview;
 						if(isPreview){
 							//打开本地预览
@@ -247,60 +266,54 @@ export default {
 								uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 							});
 						}
-					} else if (index == 4) {
-						//开始直播推流
-						mapleCloud.startPublish({rtmpUrl: ""}, function(ret) {
-							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
-						});
-						isSendingVideo = !isSendingVideo;
-					} else if (index == 5) {
+					} else if (index == 6) {
 						//切换前后摄像头
 						mapleCloud.switchCamera();
-					} else if (index == 6) {
+					} else if (index == 7) {
 						//停止直播推流
 						mapleCloud.stopPublish(function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 7) {
+					} else if (index == 8) {
 						isBeautify = !isBeautify;
 						//开关美颜
 						mapleCloud.enableBeautify({enabled: isBeautify}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 						
-					} else if (index == 8) {
+					} else if (index == 9) {
 						mapleCloud.setBeautifyLevel({level: 0.8}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 9) {
+					} else if (index == 10) {
 						isFrontOutputMirror = !isFrontOutputMirror;
 						//切换前置摄像头镜像输出
 						mapleCloud.enableFrontOutputMirror({enabled: isFrontOutputMirror}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 						
-					} else if (index == 10) {
+					} else if (index == 11) {
 						me.$refs.minMapleRTCView.startPlayMedia({path: "", type:2, cycle:1}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 							isPausedMedia = false;
 							isMutedMedia = false;
 						});
-					} else if (index == 11) {
+					} else if (index == 12) {
 						isPausedMedia = !isPausedMedia;
 						mapleCloud.pausePlayMedia({paused: isPausedMedia}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 12) {
+					} else if (index == 13) {
 						mapleCloud.stopPlayMedia({}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 						
-					} else if (index == 13) {
+					} else if (index == 14) {
 						isMutedMedia = !isMutedMedia;
 						mapleCloud.mutePlayMedia({muted: isMutedMedia}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
-					} else if (index == 14) {
+					} else if (index == 15) {
 						mapleCloud.adjustPlayMediaVolume({volume: 50}, function(ret) {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
