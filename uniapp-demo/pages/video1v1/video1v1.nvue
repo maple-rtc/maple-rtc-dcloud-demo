@@ -14,6 +14,13 @@
 			 class="minMapleRTCView" 
 			 :style="minStyle"></LM-mapleRTCView>
 		</view>
+		
+		<view class="header">
+			<LM-mapleRTCView
+			 ref="minMapleMediaView" 
+			 class="minMapleMediaView" 
+			 :style="minStyle"></LM-mapleRTCView>
+		</view>
 
 		<view class="foot-content">
 		  <chat-room id="chatRoom" ref="chatRoom" class="chat-room" :roomId="roomId"></chat-room>
@@ -50,6 +57,7 @@
 	var isBackCameraTorchOn = false;
 	var isPausedMedia = true;
 	var isMutedMedia = true;
+	var isCameraSource = true;
 
 export default {
 	data() {
@@ -256,7 +264,7 @@ export default {
 		menuAction(){
 			var me = this;
 			 uni.showActionSheet({
-				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始停止发送本地视频", '切换前后摄像头', '开关显示远端视频','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开关闪光灯','播放媒体文件','暂停媒体','停止媒体','静音媒体','调节媒体音量','设置媒体播放位置','获取总时长','获取当前播放位置', "开关本地音频流"],
+				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始停止发送本地视频", '切换前后摄像头', '开关显示远端视频','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开关闪光灯','播放媒体文件','暂停媒体','停止媒体','静音媒体','调节媒体音量','设置媒体播放位置','获取总时长','获取当前播放位置', '开关本地音频流', '播放视频媒体', '停止播放视频媒体', '切换视频源'],
 				success(res) {
 					var index = res.tapIndex;
 					if (index == 0) {
@@ -380,6 +388,33 @@ export default {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 					}
+					else if (index == 20) {
+						me.$refs.minMapleMediaView.stopPlayMedia({index:-1},function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
+						
+						 me.$refs.minMapleMediaView.startPlayMedia({path: "http://share.lmaple.com/test.flv", type:3, cycle:1, index:-1}, function(ret) {
+						 	uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						 	isPausedMedia = false;
+						 	isMutedMedia = false;
+						 });
+					} else if (index == 21) {
+						me.$refs.minMapleMediaView.stopPlayMedia({index:-1},function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
+					} else if (index == 22) {
+						if(isCameraSource){
+							mapleCloud.switchLocalVideoStream({type:2},function(ret) {
+								uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+							});
+						}else{
+							mapleCloud.switchLocalVideoStream({type:1},function(ret) {
+								uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+							});
+						}
+						isCameraSource = !isCameraSource;
+						
+					}
 				}
 			 })
 		},
@@ -464,6 +499,24 @@ export default {
 	background-color:#000000;
 	right:20rpx;
 	top:20rpx;
+
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+
+	border-style: solid;
+	border-width: 1px; 
+	border-color: rgba(255,255,255,.2);
+	
+}
+.minMapleMediaView{
+	width: 220rpx;
+	height: 300rpx;
+	position: fixed;
+	background-color:#000000;
+	right:20rpx;
+	top:350rpx;
 
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;

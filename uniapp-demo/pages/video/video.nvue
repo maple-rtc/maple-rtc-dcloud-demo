@@ -141,7 +141,7 @@ export default {
 		//设置音频为混音模式
 		mapleCloud.setAudioConferenceProfile({profile:'mcu'});
 		//设置媒体模式
-		mapleCloud.setMediaProfile({audioProfile:'voiceHighQuality', videoProfile:'360P'});
+		mapleCloud.setMediaProfile({audioProfile:'musicHighQuality', videoProfile:'360P'});
 	},
 	onReady() {
 		this.join();

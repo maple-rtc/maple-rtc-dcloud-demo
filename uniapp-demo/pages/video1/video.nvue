@@ -121,7 +121,7 @@ export default {
 		//设置频道属性为音频+视频
 		mapleCloud.setChannelProfile({profile:'voiceAndVideo'});
 		//设置媒体模式
-		mapleCloud.setMediaProfile({audioProfile:'voiceHighQuality', videoProfile:'360P'});
+		mapleCloud.setMediaProfile({audioProfile:'musicHighQuality', videoProfile:'360P'});
 	},
 	onReady() {
 		this.join();
