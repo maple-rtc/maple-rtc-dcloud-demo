@@ -393,7 +393,7 @@ export default {
 							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						});
 						
-						 me.$refs.minMapleMediaView.startPlayMedia({path: "http://share.lmaple.com/test.flv", type:3, cycle:1, index:-1}, function(ret) {
+						 me.$refs.minMapleMediaView.startPlayMedia({path: "http://share.lmaple.com/test.mp4", type:3, cycle:1, index:-1}, function(ret) {
 						 	uni.showToast({ title: JSON.stringify(ret),icon:'none'});
 						 	isPausedMedia = false;
 						 	isMutedMedia = false;
