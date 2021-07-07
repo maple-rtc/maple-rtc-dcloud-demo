@@ -78,6 +78,24 @@
 		        }
 		    }
 		}
+		,{
+		    "path" : "pages/screenshare/screen",
+		    "style" : {
+		        "app-plus" : {
+		            "titleNView" : {
+		    			"autoBackButton":false,
+		                "buttons" : [
+		                       {
+		    						 "text": "exit", 
+		    						 "fontSize":"16",
+		    						 "float": "left",
+		    						 "color":"#ff0000"
+		                        }
+		                ]
+		            }
+		        }
+		    }
+		}
         ,{
             "path" : "pages/audioroom/audioroom",
             "style" : {

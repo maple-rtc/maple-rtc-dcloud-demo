@@ -5,7 +5,7 @@
 		</view>
 		
 		<view>
-			<neil-modal :show="show6" @close="closeModal('6')" content="当前appId 为空, 从蓝蘑云网站[http://account.lmaple.com/]注册appID">
+			<neil-modal :show="show7" @close="closeModal('7')" content="当前appId 为空, 从蓝蘑云网站[http://account.lmaple.com/]注册appID">
 			</neil-modal>
 		</view>
 		
@@ -97,6 +97,22 @@
 		    </neil-modal>
 		</view>
 		
+		<view>
+		    <button type="default" @click="bindClick('6')">屏幕分享</button>
+		    <neil-modal :show="show6" @close="closeModal('6')" @confirm="confirmModal('6')" title="请输入房间和用户名">
+		        <view class="input-view">
+		            <view class="input-name">
+		                <view>用户名</view>
+		                <input type="text" placeholder="请输入用户Id" v-model="userId" />
+		            </view>
+		            <view class="input-name">
+		                <view>房间ID</view>
+		                <input type="text" placeholder="请输入房间ID" v-model="roomId" />
+		            </view>
+		        </view>
+		    </neil-modal>
+		</view>
+		
 		<view class="line-top">
 			<view class="line"></view>
 		</view>
@@ -122,6 +138,7 @@
 				show4: false,
 				show5: false,
 				show6: false,
+				show7: false,
 				userId:"",
 				roomId:""
 			};
@@ -132,9 +149,8 @@
 			}
 			
 			if(appId == ""){
-				
-				 this[`show6`] = true
-			return;
+				 this[`show7`] = true
+				return;
 			}
 		},
 		
@@ -184,6 +200,10 @@
 				} else if (type == 5) {
 					uni.navigateTo({
 						url:"../live/liveplay?channelId="+channelId+"&userId="+userId
+					})
+				} else if (type == 6) {
+					uni.navigateTo({
+						url:"../screenshare/screen?channelId="+channelId+"&userId="+userId
 					})
 				}
 				
