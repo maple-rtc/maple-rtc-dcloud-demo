@@ -142,7 +142,7 @@ export default {
 		//直播推流回调状态
 		mapleCloud.addEventListen({name: 'livePublishListener'}, function(ret) {
 			if(ret.status == 0){
-				modal.toast({ message: "推送媒体流失败！", duration: 2});
+				modal.toast({ message: "推送媒体流停止！", duration: 2});
 			}else if(ret.status == 1){
 				modal.toast({ message:  "正在开始推送直播流！", duration: 2});
 			}else if(ret.status == 2){

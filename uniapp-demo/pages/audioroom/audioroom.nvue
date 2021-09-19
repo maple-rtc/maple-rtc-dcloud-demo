@@ -66,6 +66,11 @@ export default {
 			title: JSON.stringify(ret),
 			icon:'none'
 		});
+		
+		//设置音量提示
+		mapleCloud.enableAudioVolumeIndication({interval:500}, function(ret) {
+			uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+		});
 	});
 	
 	//加入频道失败监听

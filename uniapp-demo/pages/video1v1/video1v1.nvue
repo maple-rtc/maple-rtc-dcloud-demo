@@ -134,7 +134,7 @@ export default {
 		//用户加入通知监听
 		mapleCloud.addEventListen({name: 'userJoinedNoticeListener'}, this.onUserJoinedNoticeListener);
 		//用户离开通知监听
-		mapleCloud.addEventListen({name: 'userOfflineNoticeListener'}, this.onUserOfflineNoticeListener);
+		mapleCloud.addEventListen({name: 'userOfflineNoticeListener'}, this.onUserOfflineNoticeListener);		
 
 		//SDK错误监听
 		mapleCloud.addEventListen({name: 'errorListener'}, function(ret) {
@@ -142,6 +142,22 @@ export default {
 			modal.toast({ message: "设备没有录音或者摄像头权限,在系统设置里打开相关权限！", duration: 1.5});
 		else
 			modal.toast({ message: JSON.stringify(ret), duration: 1.5});
+		});
+		
+		//直播推流回调状态
+		mapleCloud.addEventListen({name: 'livePublishListener'}, function(ret) {
+			if(ret.status == 0){
+				modal.toast({ message: "推送媒体流停止！", duration: 2});
+			}else if(ret.status == 1){
+				modal.toast({ message:  "正在开始推送直播流！", duration: 2});
+			}else if(ret.status == 2){
+				modal.toast({ message: "已经在推送媒体流成功！", duration: 2});
+			}
+		});
+		
+		//直播混流转码回调状态
+		mapleCloud.addEventListen({name: 'liveTranscodingStatus'}, function(ret) {
+			modal.toast({ message: "直播混流转码回调状态！", duration: 2});
 		});
 		
 		//参数设置
@@ -200,6 +216,14 @@ export default {
 					icon:'none'
 				});
 			});
+			
+			//加混流直播用户
+			mapleCloud.addLiveMixUser({userId:ownUid, x:0, y:0, width:480, height:640, zOrder:0}, function(ret) {
+			    uni.showToast({
+			    	title: JSON.stringify(ret),
+			    	icon:'none'
+			    });
+			});
 		},
 		
 		onUserJoinedNoticeListener(ret) {
@@ -238,7 +262,15 @@ export default {
 						title: JSON.stringify(ret),
 						icon:'none'
 					});
-				});		
+				});
+				
+				//加混流直播用户
+				mapleCloud.addLiveMixUser({userId:ret.uids[i], x:100, y:200, width:240, height:320, zOrder:1}, function(ret) {
+				    uni.showToast({
+				    	title: JSON.stringify(ret),
+				    	icon:'none'
+				    });
+				});
 			}
 		},
 		
@@ -260,13 +292,21 @@ export default {
 						icon:'none'
 					});
 				});
+				
+				//减混流直播用户
+				mapleCloud.removeLiveMixUser({userId: ret.uids[i]}, function(ret) {
+					uni.showToast({
+						title: JSON.stringify(ret),
+						icon:'none'
+					});
+				});
 			}
 		},
 		
 		menuAction(){
 			var me = this;
 			 uni.showActionSheet({
-				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始停止发送本地视频", '切换前后摄像头', '开关显示远端视频','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开关闪光灯','播放媒体文件','暂停媒体','停止媒体','静音媒体','调节媒体音量','设置媒体播放位置','获取总时长','获取当前播放位置', '开关本地音频流', '播放视频媒体', '停止播放视频媒体', '切换视频源','切换音轨'],
+				itemList: ["开关扬声器", "开关麦克风",'切换听筒和扬声器',"开关本地预览","开始停止发送本地视频", '切换前后摄像头', '开关显示远端视频','开关美颜', '设置美颜等级','切换前置摄像头镜像输出','开关闪光灯','播放媒体文件','暂停媒体','停止媒体','静音媒体','调节媒体音量','设置媒体播放位置','获取总时长','获取当前播放位置', '开关本地音频流', '播放视频媒体', '停止播放视频媒体', '切换视频源','切换音轨','设置云端混流直播转码', '加旁路直播推流', '减旁路直播推流'],
 				success(res) {
 					var index = res.tapIndex;
 					if (index == 0) {
@@ -431,8 +471,26 @@ export default {
 								}
 							});
 						});
+					} else if (index == 24) {
+						//'设置云端混流直播转码'
+						mapleCloud.setLiveTranscoding({width:480, height:640, videoBitrate:800, videoFramerate:20, audioBitrate:64},function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});						
+					} else if (index == 25) {
+						//'设置云端混流直播转码'
+						mapleCloud.setLiveTranscoding({width:480, height:640, videoBitrate:800, videoFramerate:20, audioBitrate:64},function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
+						//'加旁路直播推流'
+						mapleCloud.addPublishStreamUrl({rtmpUrl:""},function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
+					} else if (index == 26) {
+						//'减旁路直播推流'
+						mapleCloud.removePublishStreamUrl({rtmpUrl:""},function(ret) {
+							uni.showToast({ title: JSON.stringify(ret),icon:'none'});
+						});
 					}
-						
 				}
 			 })
 		},

@@ -113,6 +113,7 @@
 		A388511D2498D62B00365A60 /* liblibUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A388511C2498D62B00365A60 /* liblibUI.a */; };
 		A388511F2498D6F800365A60 /* liblibIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A388511E2498D6F800365A60 /* liblibIO.a */; };
 		A38851212498D7BB00365A60 /* liblibNativeObj.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A38851202498D7BB00365A60 /* liblibNativeObj.a */; };
+		A3972A1526C754C40064DFEC /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3DEA6302693FA7D00CBF88D /* ReplayKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -415,6 +416,7 @@
 		A388511C2498D62B00365A60 /* liblibUI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibUI.a; path = SDK/Libs/liblibUI.a; sourceTree = "<group>"; };
 		A388511E2498D6F800365A60 /* liblibIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibIO.a; path = SDK/Libs/liblibIO.a; sourceTree = "<group>"; };
 		A38851202498D7BB00365A60 /* liblibNativeObj.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibNativeObj.a; path = SDK/Libs/liblibNativeObj.a; sourceTree = "<group>"; };
+		A3DEA6302693FA7D00CBF88D /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +424,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3972A1526C754C40064DFEC /* ReplayKit.framework in Frameworks */,
 				A35A96EB24AB02D4003875A8 /* mapleRTCDCModule.framework in Frameworks */,
 				A38851152498D1BD00365A60 /* storage.framework in Frameworks */,
 				A38851132498CF5C00365A60 /* libSDWebImage.a in Frameworks */,
@@ -746,7 +749,7 @@
 		8EED629A198A1D13000A4449 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A35A96EA24AB02D4003875A8 /* mapleRTCDCModule.framework */,
+				A3DEA6302693FA7D00CBF88D /* ReplayKit.framework */,
 				A35A96E424AAF7A4003875A8 /* liblibNativeUI.a */,
 				A35A96E524AAF7A4003875A8 /* liblibPDRCore.a */,
 				A35A96E324AAF7A4003875A8 /* liblibWeex.a */,
